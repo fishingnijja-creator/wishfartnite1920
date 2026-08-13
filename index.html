@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>wishfartnite19012 — HTML5 Canvas Game</title>
+    <meta name="description" content="wishfartnite19012 — a small HTML5 canvas multiplayer-style game (WASD, mouse aiming, shop, particles).">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="https://fishingnijja.github.io/wishfartnite19012/">
+</head>
+<body>
+    <h1>Fortnite-style Battle Royale</h1>
+    <div id="instructions">WASD to move · Space to shoot · B to build wall · R to build ramp · Kill enemies for loot</div>
+    <div id="hud">
+        <p id="coins">Coins: 0</p>
+        <p id="health">Health: 100</p>
+        <p id="shieldDisplay">Shield: 0</p>
+        <p id="materials">Materials: 120</p>
+    </div>
+
+    <div id="gameControls">
+        <button id="pauseBtn">Pause</button>
+        <button id="resetBtn">Reset</button>
+        <button id="soundToggle">Sound: On</button>
+        <span id="scoreDisplay">Score: 0</span>
+        <span id="highScoreDisplay">High: 0</span>
+        <span id="fpsDisplay">FPS: --</span>
+    </div>
+
+    <button onclick="addCoins(50)">Get 50 Coins</button>
+    <button onclick="spendCoins(20)">Spend 20 Coins</button>
+    <button id="openShopBtn">Shop</button>
+
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="controls">
+        <label for="modeSelect">Renderer:</label>
+        <select id="modeSelect">
+            <option value="2.5d">2.5D (current)</option>
+            <option value="isometric">Isometric</option>
+            <option value="webgl">WebGL 3D</option>
+        </select>
+    </div>
+
+    <div id="threeContainer" style="display:none"></div>
+    <div id="shopModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <button id="closeShopBtn" class="close">×</button>
+            <h2>Skin Shop</h2>
+            <div id="skinList" class="skin-list"></div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="iso.js"></script>
+    <script src="three_scene.js"></script>
+    <script>
+        const modeSelect = document.getElementById('modeSelect');
+        const canvas = document.getElementById('gameCanvas');
+        const threeContainer = document.getElementById('threeContainer');
+
+        function setMode(mode) {
+            if (mode === '2.5d') {
+                // stop others
+                stopIsometric && stopIsometric();
+                stopThree && stopThree();
+                threeContainer.style.display = 'none';
+                canvas.style.display = 'block';
+                startLoop && startLoop();
+            } else if (mode === 'isometric') {
+                stopGame && stopGame();
+                stopThree && stopThree();
+                threeContainer.style.display = 'none';
+                canvas.style.display = 'block';
+                startIsometric && startIsometric();
+            } else if (mode === 'webgl') {
+                stopGame && stopGame();
+                stopIsometric && stopIsometric();
+                canvas.style.display = 'none';
+                threeContainer.style.display = 'block';
+                startThree && startThree(threeContainer);
+            }
+        }
+
+        modeSelect.addEventListener('change', (e) => setMode(e.target.value));
+        // ensure default
+        window.addEventListener('load', () => setMode(modeSelect.value));
+    </script>
+</body>
+</html>

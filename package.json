@@ -1,0 +1,11 @@
+{
+  "name": "wishfartnite19012",
+  "version": "1.0.0",
+  "description": "A small canvas game",
+  "scripts": {
+    "start": "http-server -p 8000"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

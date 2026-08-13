@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap: site sitemap for GitHub Pages
+Sitemap: https://fishingnijja.github.io/wishfartnite19012/sitemap.xml
